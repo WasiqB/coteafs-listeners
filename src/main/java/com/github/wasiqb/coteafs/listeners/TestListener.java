@@ -43,7 +43,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onFinish (final ITestContext context) {
-		logTestContext (s -> log.info (s), context, "Test Execution finished for Test [%s]...");
+		logTestContext (log::info, context, "Test Execution finished for Test [%s]...");
 	}
 
 	/*
@@ -52,7 +52,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onStart (final ITestContext context) {
-		logTestContext (s -> log.info (s), context, "Test Execution started for Test [%s]...");
+		logTestContext (log::info, context, "Test Execution started for Test [%s]...");
 	}
 
 	/*
@@ -61,7 +61,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onTestFailedButWithinSuccessPercentage (final ITestResult result) {
-		logTestResult (s -> log.warn (s), result, "[--] - [%s] PARTIAL FAILED...");
+		logTestResult (log::warn, result, "[--] - [%s] PARTIAL FAILED...");
 	}
 
 	/*
@@ -70,8 +70,8 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onTestFailure (final ITestResult result) {
-		logTestResult (s -> log.fatal (s), result, "[-] - [%s] FAILED...");
-		logTestResult (s -> log.fatal (s), result, result.getThrowable ());
+		logTestResult (log::fatal, result, "[-] - [%s] FAILED...");
+		logTestResult (log::fatal, result, result.getThrowable ());
 	}
 
 	/*
@@ -80,7 +80,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onTestSkipped (final ITestResult result) {
-		logTestResult (s -> log.error (s), result, "[*] - [%s] SKIPPED...");
+		logTestResult (log::error, result, "[*] - [%s] SKIPPED...");
 	}
 
 	/*
@@ -89,7 +89,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onTestStart (final ITestResult result) {
-		logTestResult (s -> log.info (s), result, "Test Execution started for method [%s]...");
+		logTestResult (log::info, result, "Test Execution started for method [%s]...");
 	}
 
 	/*
@@ -98,6 +98,6 @@ public class TestListener extends ListenerCommon implements ITestListener {
 	 */
 	@Override
 	public void onTestSuccess (final ITestResult result) {
-		logTestResult (s -> log.info (s), result, "[+] - [%s] PASSED...");
+		logTestResult (log::info, result, "[+] - [%s] PASSED...");
 	}
 }

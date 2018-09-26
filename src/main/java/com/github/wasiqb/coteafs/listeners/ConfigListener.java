@@ -42,7 +42,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
 	 */
 	@Override
 	public void beforeConfiguration (final ITestResult tr) {
-		logTestResult (s -> log.info (s), tr, "Configuration method [%s] is executing...");
+		logTestResult (log::info, tr, "Configuration method [%s] is executing...");
 	}
 
 	/*
@@ -51,9 +51,8 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
 	 */
 	@Override
 	public void onConfigurationFailure (final ITestResult itr) {
-		logTestResult (s -> log.fatal (s), itr,
-				"[-] - Configuration method [%s] FAILED to execute...");
-		logTestResult (s -> log.fatal (s), itr, itr.getThrowable ());
+		logTestResult (log::fatal, itr, "[-] - Configuration method [%s] FAILED to execute...");
+		logTestResult (log::fatal, itr, itr.getThrowable ());
 	}
 
 	/*
@@ -62,8 +61,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
 	 */
 	@Override
 	public void onConfigurationSkip (final ITestResult itr) {
-		logTestResult (s -> log.warn (s), itr,
-				"[*] - Configuration method [%s] SKIPPED from execution...");
+		logTestResult (log::warn, itr, "[*] - Configuration method [%s] SKIPPED from execution...");
 	}
 
 	/*
@@ -72,6 +70,6 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
 	 */
 	@Override
 	public void onConfigurationSuccess (final ITestResult itr) {
-		logTestResult (s -> log.info (s), itr, "[+] - Configuration method [%s] PASSED...");
+		logTestResult (log::info, itr, "[+] - Configuration method [%s] PASSED...");
 	}
 }

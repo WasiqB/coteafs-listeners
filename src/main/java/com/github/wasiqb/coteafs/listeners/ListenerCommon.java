@@ -30,7 +30,7 @@ import org.testng.ITestResult;
  * @since Sep 25, 2018
  */
 class ListenerCommon {
-	private static final String line = repeat ('=', 50);
+	private static final String LINE = repeat ('=', 50);
 
 	private final Logger log;
 
@@ -45,17 +45,17 @@ class ListenerCommon {
 
 	protected void logTestContext (final Consumer <String> res, final ITestContext context,
 			final String message) {
-		this.log.info (line);
+		this.log.info (LINE);
 		res.accept (format (message, context.getName ()));
 		if (context.getEndDate () != null) {
 			this.log.info (format ("Test executed on [%s]...", context.getEndDate ()));
 		}
-		this.log.info (line);
+		this.log.info (LINE);
 	}
 
 	protected void logTestResult (final Consumer <String> res, final ITestResult result,
 			final String message) {
-		this.log.info (line);
+		this.log.info (LINE);
 		res.accept (format (message, result.getName ()));
 		if (result.getStatus () != ITestResult.STARTED) {
 			final long start = result.getStartMillis ();
@@ -63,7 +63,7 @@ class ListenerCommon {
 			final long total = end - start;
 			this.log.info (format ("Time taken: %d secs", ofMillis (total).getSeconds ()));
 		}
-		this.log.info (line);
+		this.log.info (LINE);
 	}
 
 	protected void logTestResult (final Consumer <String> res, final ITestResult result,

@@ -32,7 +32,7 @@ import org.testng.ISuiteListener;
  * @since Sep 25, 2018
  */
 public class SuiteListener implements ISuiteListener {
-	private static final String	line	= repeat ('=', 50);
+	private static final String	LINE	= repeat ('=', 50);
 	private static final Logger	log		= getLogger (SuiteListener.class);
 
 	private long	end;
@@ -45,7 +45,7 @@ public class SuiteListener implements ISuiteListener {
 	@Override
 	public void onFinish (final ISuite suite) {
 		this.end = currentTimeMillis ();
-		logTestSuite (s -> log.info (s), suite, "Test Suite Execution finished for Suite [%s]...");
+		logTestSuite (log::info, suite, "Test Suite Execution finished for Suite [%s]...");
 	}
 
 	/*
@@ -55,17 +55,17 @@ public class SuiteListener implements ISuiteListener {
 	@Override
 	public void onStart (final ISuite suite) {
 		this.start = currentTimeMillis ();
-		logTestSuite (s -> log.info (s), suite, "Test Suite Execution started for Suite [%s]...");
+		logTestSuite (log::info, suite, "Test Suite Execution started for Suite [%s]...");
 	}
 
 	private void logTestSuite (final Consumer <String> res, final ISuite suite,
 			final String message) {
-		log.info (line);
+		log.info (LINE);
 		res.accept (format (message, suite.getName ()));
 		if (this.end > this.start) {
 			final long total = this.end - this.start;
 			log.info (format ("Time taken: %d secs", ofMillis (total).getSeconds ()));
 		}
-		log.info (line);
+		log.info (LINE);
 	}
 }

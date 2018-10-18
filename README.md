@@ -4,6 +4,16 @@ A ready to use TestNG listeners for run-time reporting of test execution. Just p
 
 ## Usage
 
+Add dependency to your POM file.
+
+```xml
+<dependency>
+    <groupId>com.github.wasiqb.coteafs</groupId>
+    <artifactId>listeners</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ### TestNG.xml file
 
 Add listeners in `testng.xml` file in listener's block.

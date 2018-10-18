@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>listeners</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Generic runtime Test reporting listeners.</description>
 	<url>https://github.com/WasiqB/coteafs-listeners</url>
@@ -27,7 +27,7 @@
 	</issueManagement>
 
 	<ciManagement>
-		<system>travis</system>
+		<system>Circle CI</system>
 		<url>https://circleci.com/gh/WasiqB/coteafs-listeners</url>
 	</ciManagement>
 

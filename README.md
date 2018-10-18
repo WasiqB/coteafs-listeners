@@ -10,7 +10,7 @@ Add dependency to your POM file.
 <dependency>
     <groupId>com.github.wasiqb.coteafs</groupId>
     <artifactId>listeners</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 

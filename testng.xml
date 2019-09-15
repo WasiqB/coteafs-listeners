@@ -5,6 +5,8 @@
 		<listener class-name="com.github.wasiqb.coteafs.listeners.ConfigListener" />
 		<listener class-name="com.github.wasiqb.coteafs.listeners.SuiteListener" />
 		<listener class-name="com.github.wasiqb.coteafs.listeners.TestListener" />
+		<listener class-name="com.github.wasiqb.coteafs.listeners.ExecutionListener" />
+		<listener class-name="com.github.wasiqb.coteafs.listeners.DataProviderListener" />
 	</listeners>
 	<test name="Test">
 		<classes>

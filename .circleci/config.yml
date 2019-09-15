@@ -1,7 +1,7 @@
 default: &default
   working_directory: ~/repo
   docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/openjdk:8u212-jdk-stretch
 version: 2
 jobs:
   code_checkout:
@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: listener-{{ .Branch }}-{{ .Revision }}
+          key: repo-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/repo
   resolve_dependencies:
@@ -17,62 +17,65 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - listener-{{ .Branch }}-{{ .Revision }}
+            - repo-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Resolve Dependencies
-          command: mvn dependency:resolve
+          command: mvn clean dependency:resolve
       - save_cache:
           paths:
             - ~/.m2
-          key: listener-dependency-{{ .Branch }}-{{ .Revision }}
+          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
   build:
     <<: *default
     steps:
       - restore_cache:
-          keys:
-            - listener-{{ .Branch }}-{{ .Revision }}
-            - listener-dependency-{{ .Branch }}-{{ .Revision }}
+          key: repo-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Build project
-          command: mvn clean install -DskipTests=true
+          command: mvn compile
       - save_cache:
-          key: listener-target-{{ .Branch }}-{{ .Revision }}
+          key: repo-target-{{ .Branch }}-{{ .Revision }}
           paths:
             - target/
   test:
     <<: *default
     steps:
       - restore_cache:
-          keys:
-            - listener-{{ .Branch }}-{{ .Revision }}
-            - listener-dependencies-{{ .Branch }}-{{ .Revision }}
-            - listener-target-{{ .Branch }}-{{ .Revision }}
+          key: repo-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-target-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Run Tests with Sonar Coverage
           command: mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test
       - save_cache:
-          key: listener-reports-{{ .Branch }}-{{ .Revision }}
+          key: repo-reports-{{ .Branch }}-{{ .Revision }}
           paths:
             - reports/
   code_analysis:
     <<: *default
     steps:
       - restore_cache:
-          keys:
-            - listener-{{ .Branch }}-{{ .Revision }}
-            - listener-dependencies-{{ .Branch }}-{{ .Revision }}
-            - listener-target-{{ .Branch }}-{{ .Revision }}
-            - listener-reports-{{ .Branch }}-{{ .Revision }}
+          key: repo-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-dependency-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-target-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: repo-reports-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Update Sonar Analysis
-          command: mvn package sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY
+          command: mvn package sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -DskipTests -Dsonar.branch.name=$CIRCLE_BRANCH
 
 filters: &all_branches
   branches:
     only:
-      - develop
       - master
       - release
+      - develop
       - /issue-.*/
 
 workflows:
@@ -90,10 +93,10 @@ workflows:
           requires:
             - resolve_dependencies
       - test:
+          filters: *all_branches
           requires:
             - build
-          filters: *all_branches
       - code_analysis:
+          filters: *all_branches
           requires:
             - test
-          filters: *all_branches

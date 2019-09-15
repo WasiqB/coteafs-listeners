@@ -15,9 +15,14 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -25,30 +30,43 @@ import org.testng.annotations.Test;
  * @since Sep 25, 2018
  */
 public class ListenerTest {
-	/**
-	 * @author wasiqb
-	 * @since Sep 25, 2018
-	 */
-	@BeforeTest
-	public void setupTest () {
-		return;
-	}
+    /**
+     * @author wasiqb
+     * @since Sep 25, 2018
+     */
+    @BeforeTest
+    public void setupTest () {
+        return;
+    }
 
-	/**
-	 * @author wasiqb
-	 * @since Sep 25, 2018
-	 */
-	@AfterTest
-	public void teardownTest () {
-		return;
-	}
+    /**
+     * @author wasiqb
+     * @since Sep 25, 2018
+     */
+    @AfterTest
+    public void teardownTest () {
+        return;
+    }
 
-	/**
-	 * @author wasiqb
-	 * @since Sep 25, 2018
-	 */
-	@Test
-	public void testSuccess () {
-		Assert.assertTrue (true);
-	}
+    /**
+     * @author Wasiq Bhamla
+     * @since 15-Sep-2019
+     * @return data
+     */
+    @DataProvider
+    public Iterator<Object []> testData () {
+        final List<Object []> data = new ArrayList<> ();
+        data.add (new Object [] { true });
+        return data.iterator ();
+    }
+
+    /**
+     * @author wasiqb
+     * @param value
+     * @since Sep 25, 2018
+     */
+    @Test (dataProvider = "testData")
+    public void testSuccess (final boolean value) {
+        Assert.assertTrue (value);
+    }
 }

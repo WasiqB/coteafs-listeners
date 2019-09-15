@@ -16,62 +16,46 @@
 package com.github.wasiqb.coteafs.listeners;
 
 import static java.lang.String.format;
-import static java.time.Duration.ofMillis;
+import static java.lang.System.currentTimeMillis;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 import java.util.function.Consumer;
 
-import org.apache.logging.log4j.Logger;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
+import com.github.wasiqb.coteafs.logger.Loggy;
 
 /**
  * @author wasiqb
  * @since Sep 25, 2018
  */
 class ListenerCommon {
-	private static final String LINE = repeat ('=', 50);
+    private static final String LINE = repeat ('=', 50);
+    private long                end;
+    private final Loggy         log;
+    private long                start;
 
-	private final Logger log;
+    /**
+     * @author wasiqb
+     * @param log
+     * @since Sep 25, 2018
+     */
+    public ListenerCommon (final Loggy log) {
+        this.log = log;
+    }
 
-	/**
-	 * @author wasiqb
-	 * @param log
-	 * @since Sep 25, 2018
-	 */
-	public ListenerCommon (final Logger log) {
-		this.log = log;
-	}
+    protected void endLogging (final Consumer<Loggy> logger) {
+        this.end = currentTimeMillis ();
+        final double total = (this.end - this.start) / 1000.0;
+        logMessage (logger.andThen (l -> l.i (format ("Total Time taken: %.3f secs", total))));
+    }
 
-	protected void logTestContext (final Consumer <String> res, final ITestContext context,
-			final String message) {
-		this.log.info (LINE);
-		res.accept (format (message, context.getName ()));
-		if (context.getEndDate () != null) {
-			this.log.info (format ("Test executed on [%s]...", context.getEndDate ()));
-		}
-		this.log.info (LINE);
-	}
+    protected void startLogging (final Consumer<Loggy> logger) {
+        this.start = currentTimeMillis ();
+        logMessage (logger);
+    }
 
-	protected void logTestResult (final Consumer <String> res, final ITestResult result,
-			final String message) {
-		this.log.info (LINE);
-		res.accept (format (message, result.getName ()));
-		if (result.getStatus () != ITestResult.STARTED) {
-			final long start = result.getStartMillis ();
-			final long end = result.getEndMillis ();
-			final long total = end - start;
-			this.log.info (format ("Time taken: %d secs", ofMillis (total).getSeconds ()));
-		}
-		this.log.info (LINE);
-	}
-
-	protected void logTestResult (final Consumer <String> res, final ITestResult result,
-			final Throwable cause) {
-		if (cause != null) {
-			logTestResult (res, result, cause.getMessage ());
-		} else {
-			logTestResult (res, result, "Unknown Exception!!");
-		}
-	}
+    private void logMessage (final Consumer<Loggy> logger) {
+        this.log.i (LINE);
+        logger.accept (this.log);
+        this.log.i (LINE);
+    }
 }

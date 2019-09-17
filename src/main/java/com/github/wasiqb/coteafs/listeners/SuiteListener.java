@@ -27,7 +27,8 @@ import org.testng.ISuiteListener;
  * @since Sep 25, 2018
  */
 public class SuiteListener extends ListenerCommon implements ISuiteListener {
-    private static final Loggy LOG = init ();
+    private static final Loggy   LOG       = init ();
+    private static final boolean SUITE_LOG = LOG_CONFIG.isSuites ();
 
     /**
      * @author Wasiq Bhamla
@@ -43,7 +44,7 @@ public class SuiteListener extends ListenerCommon implements ISuiteListener {
      */
     @Override
     public void onFinish (final ISuite suite) {
-        endLogging (l -> l.i ("Test Suite Execution finished for Suite [{}]...", suite.getName ()));
+        endLogging (l -> l.i ("Test Suite Execution finished for Suite [{}]...", suite.getName ()), SUITE_LOG);
     }
 
     /*
@@ -52,6 +53,6 @@ public class SuiteListener extends ListenerCommon implements ISuiteListener {
      */
     @Override
     public void onStart (final ISuite suite) {
-        startLogging (l -> l.i ("Test Suite Execution started for Suite [{}]...", suite.getName ()));
+        startLogging (l -> l.i ("Test Suite Execution started for Suite [{}]...", suite.getName ()), SUITE_LOG);
     }
 }

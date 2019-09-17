@@ -27,7 +27,8 @@ import org.testng.ITestResult;
  * @since Sep 25, 2018
  */
 public class ConfigListener extends ListenerCommon implements IConfigurationListener {
-    private static final Loggy LOG = init ();
+    private static final boolean CONFIG_LOG = LOG_CONFIG.isConfigurations ();
+    private static final Loggy   LOG        = init ();
 
     /**
      * @author wasiqb
@@ -44,7 +45,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      */
     @Override
     public void beforeConfiguration (final ITestResult tr) {
-        startLogging (l -> l.i ("Configuration method [{}] is executing...", tr.getName ()));
+        startLogging (l -> l.i ("Configuration method [{}] is executing...", tr.getName ()), CONFIG_LOG);
     }
 
     /*
@@ -58,7 +59,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
             l.f ("[-] - Configuration method [{}] FAILED to execute...", itr.getName ());
             l.f (itr.getThrowable ()
                 .getMessage ());
-        });
+        }, CONFIG_LOG);
     }
 
     /*
@@ -68,9 +69,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      */
     @Override
     public void onConfigurationSkip (final ITestResult itr) {
-        endLogging (l -> {
-            l.w ("[*] - Configuration method [{}] SKIPPED from execution...", itr.getName ());
-        });
+        endLogging (l -> l.w ("[*] - Configuration method [{}] SKIPPED from execution...", itr.getName ()), CONFIG_LOG);
     }
 
     /*
@@ -80,8 +79,6 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      */
     @Override
     public void onConfigurationSuccess (final ITestResult itr) {
-        endLogging (l -> {
-            l.i ("[+] - Configuration method [{}] PASSED...", itr.getName ());
-        });
+        endLogging (l -> l.i ("[+] - Configuration method [{}] PASSED...", itr.getName ()), CONFIG_LOG);
     }
 }

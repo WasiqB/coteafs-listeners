@@ -15,6 +15,7 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,12 +31,15 @@ import org.testng.annotations.Test;
  * @since Sep 25, 2018
  */
 public class ListenerTest {
+    private static int countRetry;
+
     /**
      * @author wasiqb
      * @since Sep 25, 2018
      */
     @BeforeTest
     public void setupTest () {
+        countRetry = 0;
         return;
     }
 
@@ -58,6 +62,19 @@ public class ListenerTest {
         final List<Object []> data = new ArrayList<> ();
         data.add (new Object [] { true });
         return data.iterator ();
+    }
+
+    /**
+     * @author Wasiq Bhamla
+     * @since 17-Sep-2019
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void testRetry () throws FileNotFoundException {
+        countRetry++;
+        if (countRetry < 2) {
+            throw new FileNotFoundException ();
+        }
     }
 
     /**

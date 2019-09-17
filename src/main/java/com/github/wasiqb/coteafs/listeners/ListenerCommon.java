@@ -15,12 +15,15 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
+import static com.github.wasiqb.coteafs.config.loader.ConfigLoader.settings;
 import static java.lang.String.format;
 import static java.lang.System.currentTimeMillis;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 import java.util.function.Consumer;
 
+import com.github.wasiqb.coteafs.listeners.config.ListenerConfig;
+import com.github.wasiqb.coteafs.listeners.config.LogSetting;
 import com.github.wasiqb.coteafs.logger.Loggy;
 
 /**
@@ -28,10 +31,21 @@ import com.github.wasiqb.coteafs.logger.Loggy;
  * @since Sep 25, 2018
  */
 class ListenerCommon {
-    private static final String LINE = repeat ('=', 50);
-    private long                end;
-    private final Loggy         log;
-    private long                start;
+    protected static final ListenerConfig CONFIG;
+    protected static final LogSetting     LOG_CONFIG;
+    private static final String           LINE;
+
+    static {
+        LINE = repeat ('=', 50);
+        CONFIG = settings ().withKey ("coteafs.listener.config")
+            .withDefault ("listener-config.yml")
+            .load (ListenerConfig.class);
+        LOG_CONFIG = CONFIG.getLog ();
+    }
+
+    private long        end;
+    private final Loggy log;
+    private long        start;
 
     /**
      * @author wasiqb
@@ -42,15 +56,19 @@ class ListenerCommon {
         this.log = log;
     }
 
-    protected void endLogging (final Consumer<Loggy> logger) {
-        this.end = currentTimeMillis ();
-        final double total = (this.end - this.start) / 1000.0;
-        logMessage (logger.andThen (l -> l.i (format ("Total Time taken: %.3f secs", total))));
+    protected void endLogging (final Consumer<Loggy> logger, final boolean canLog) {
+        if (canLog) {
+            this.end = currentTimeMillis ();
+            final double total = (this.end - this.start) / 1000.0;
+            logMessage (logger.andThen (l -> l.i (format ("Total Time taken: %.3f secs", total))));
+        }
     }
 
-    protected void startLogging (final Consumer<Loggy> logger) {
-        this.start = currentTimeMillis ();
-        logMessage (logger);
+    protected void startLogging (final Consumer<Loggy> logger, final boolean canLog) {
+        if (canLog) {
+            this.start = currentTimeMillis ();
+            logMessage (logger);
+        }
     }
 
     private void logMessage (final Consumer<Loggy> logger) {

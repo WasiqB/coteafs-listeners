@@ -26,7 +26,8 @@ import org.testng.IExecutionListener;
  * @since 14-Sep-2019
  */
 public class ExecutionListener extends ListenerCommon implements IExecutionListener {
-    private static final Loggy LOG = init ();
+    private static final boolean EXEC_LOG = LOG_CONFIG.isExecution ();
+    private static final Loggy   LOG      = init ();
 
     /**
      * @author Wasiq Bhamla
@@ -42,7 +43,7 @@ public class ExecutionListener extends ListenerCommon implements IExecutionListe
      */
     @Override
     public void onExecutionFinish () {
-        endLogging (l -> l.i ("TestNG Execution finished..."));
+        endLogging (l -> l.i ("TestNG Execution finished..."), EXEC_LOG);
     }
 
     /*
@@ -51,6 +52,6 @@ public class ExecutionListener extends ListenerCommon implements IExecutionListe
      */
     @Override
     public void onExecutionStart () {
-        startLogging (l -> l.i ("TestNG Execution started..."));
+        startLogging (l -> l.i ("TestNG Execution started..."), EXEC_LOG);
     }
 }

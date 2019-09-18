@@ -43,7 +43,6 @@ class ListenerCommon {
         LOG_CONFIG = CONFIG.getLog ();
     }
 
-    private long        end;
     private final Loggy log;
     private long        start;
 
@@ -58,8 +57,8 @@ class ListenerCommon {
 
     protected void endLogging (final Consumer<Loggy> logger, final boolean canLog) {
         if (canLog) {
-            this.end = currentTimeMillis ();
-            final double total = (this.end - this.start) / 1000.0;
+            final long end = currentTimeMillis ();
+            final double total = (end - this.start) / 1000.0;
             logMessage (logger.andThen (l -> l.i (format ("Total Time taken: %.3f secs", total))));
         }
     }

@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2017-2020, Wasiq Bhamla.
+/*
+ * Copyright (c) 2019, Wasiq Bhamla.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,40 +19,39 @@ import static com.github.wasiqb.coteafs.logger.Loggy.init;
 
 import com.github.wasiqb.coteafs.logger.Loggy;
 
-import org.testng.ISuite;
-import org.testng.ISuiteListener;
+import org.testng.IExecutionListener;
 
 /**
- * @author wasiqb
- * @since Sep 25, 2018
+ * @author Wasiq Bhamla
+ * @since 14-Sep-2019
  */
-public class SuiteListener extends ListenerCommon implements ISuiteListener {
-    private static final Loggy   LOG       = init ();
-    private static final boolean SUITE_LOG = LOG_CONFIG.isSuites ();
+public class ExecutionListener extends ListenerCommon implements IExecutionListener {
+    private static final boolean EXEC_LOG = LOG_CONFIG.isExecution ();
+    private static final Loggy   LOG      = init ();
 
     /**
      * @author Wasiq Bhamla
      * @since 14-Sep-2019
      */
-    public SuiteListener () {
+    public ExecutionListener () {
         super (LOG);
     }
 
     /*
      * (non-Javadoc)
-     * @see org.testng.ISuiteListener#onFinish(org.testng.ISuite)
+     * @see @see org.testng.IExecutionListener#onExecutionFinish()
      */
     @Override
-    public void onFinish (final ISuite suite) {
-        endLogging (l -> l.i ("Test Suite Execution finished for Suite [{}]...", suite.getName ()), SUITE_LOG);
+    public void onExecutionFinish () {
+        endLogging (l -> l.i ("TestNG Execution finished..."), EXEC_LOG);
     }
 
     /*
      * (non-Javadoc)
-     * @see org.testng.ISuiteListener#onStart(org.testng.ISuite)
+     * @see @see org.testng.IExecutionListener#onExecutionStart()
      */
     @Override
-    public void onStart (final ISuite suite) {
-        startLogging (l -> l.i ("Test Suite Execution started for Suite [{}]...", suite.getName ()), SUITE_LOG);
+    public void onExecutionStart () {
+        startLogging (l -> l.i ("TestNG Execution started..."), EXEC_LOG);
     }
 }

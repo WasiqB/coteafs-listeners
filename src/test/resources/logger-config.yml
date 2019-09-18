@@ -1,0 +1,6 @@
+status: WARN
+loggers:
+  - name: console-log
+    type: CONSOLE
+    message_pattern: "[%d{HH:mm:ss.SSS}] [%-5level] - %msg (%logger{1}:%L) %throwable{short.message}%n"
+    level: DEBUG

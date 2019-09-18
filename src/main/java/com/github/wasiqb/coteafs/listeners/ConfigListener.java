@@ -15,61 +15,70 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static org.apache.logging.log4j.LogManager.getLogger;
+import static com.github.wasiqb.coteafs.logger.Loggy.init;
 
-import org.apache.logging.log4j.Logger;
-import org.testng.IConfigurationListener2;
+import com.github.wasiqb.coteafs.logger.Loggy;
+
+import org.testng.IConfigurationListener;
 import org.testng.ITestResult;
 
 /**
  * @author wasiqb
  * @since Sep 25, 2018
  */
-public class ConfigListener extends ListenerCommon implements IConfigurationListener2 {
-	private static final Logger log = getLogger (ConfigListener.class);
+public class ConfigListener extends ListenerCommon implements IConfigurationListener {
+    private static final boolean CONFIG_LOG = LOG_CONFIG.isConfigurations ();
+    private static final Loggy   LOG        = init ();
 
-	/**
-	 * @author wasiqb
-	 * @since Sep 25, 2018
-	 */
-	public ConfigListener () {
-		super (log);
-	}
+    /**
+     * @author wasiqb
+     * @since Sep 25, 2018
+     */
+    public ConfigListener () {
+        super (LOG);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.testng.IConfigurationListener2#beforeConfiguration(org.testng.ITestResult)
-	 */
-	@Override
-	public void beforeConfiguration (final ITestResult tr) {
-		logTestResult (log::info, tr, "Configuration method [%s] is executing...");
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.testng.IConfigurationListener2#beforeConfiguration(org.testng.
+     * ITestResult)
+     */
+    @Override
+    public void beforeConfiguration (final ITestResult tr) {
+        startLogging (l -> l.i ("Configuration method [{}] is executing...", tr.getName ()), CONFIG_LOG);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.testng.IConfigurationListener#onConfigurationFailure(org.testng.ITestResult)
-	 */
-	@Override
-	public void onConfigurationFailure (final ITestResult itr) {
-		logTestResult (log::fatal, itr, "[-] - Configuration method [%s] FAILED to execute...");
-		logTestResult (log::fatal, itr, itr.getThrowable ());
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.testng.IConfigurationListener#onConfigurationFailure(org.testng.
+     * ITestResult)
+     */
+    @Override
+    public void onConfigurationFailure (final ITestResult itr) {
+        endLogging (l -> {
+            l.f ("[-] - Configuration method [{}] FAILED to execute...", itr.getName ());
+            l.f (itr.getThrowable ()
+                .getMessage ());
+        }, CONFIG_LOG);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.testng.IConfigurationListener#onConfigurationSkip(org.testng.ITestResult)
-	 */
-	@Override
-	public void onConfigurationSkip (final ITestResult itr) {
-		logTestResult (log::warn, itr, "[*] - Configuration method [%s] SKIPPED from execution...");
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.testng.IConfigurationListener#onConfigurationSkip(org.testng.ITestResult)
+     */
+    @Override
+    public void onConfigurationSkip (final ITestResult itr) {
+        endLogging (l -> l.w ("[*] - Configuration method [{}] SKIPPED from execution...", itr.getName ()), CONFIG_LOG);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.testng.IConfigurationListener#onConfigurationSuccess(org.testng.ITestResult)
-	 */
-	@Override
-	public void onConfigurationSuccess (final ITestResult itr) {
-		logTestResult (log::info, itr, "[+] - Configuration method [%s] PASSED...");
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.testng.IConfigurationListener#onConfigurationSuccess(org.testng.
+     * ITestResult)
+     */
+    @Override
+    public void onConfigurationSuccess (final ITestResult itr) {
+        endLogging (l -> l.i ("[+] - Configuration method [{}] PASSED...", itr.getName ()), CONFIG_LOG);
+    }
 }

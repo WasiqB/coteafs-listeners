@@ -15,11 +15,13 @@
  */
 package com.github.wasiqb.coteafs.listeners.config;
 
+import com.github.wasiqb.coteafs.config.util.BasePojo;
+
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
-public class ListenerConfig {
+public class ListenerConfig extends BasePojo {
     private LogSetting   log;
     private RetrySetting recover;
 

@@ -18,11 +18,13 @@ package com.github.wasiqb.coteafs.listeners.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.wasiqb.coteafs.config.util.BasePojo;
+
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
-public class RetrySetting {
+public class RetrySetting extends BasePojo {
     private boolean      enable;
     private boolean      logging;
     private int          maxRetry;

@@ -101,7 +101,11 @@ public class TestListener extends ListenerCommon implements ITestListener {
      */
     @Override
     public void onTestSkipped (final ITestResult result) {
-        endLogging (l -> l.w ("[*] - [{}] SKIPPED...", result.getName ()), TEST_LOG);
+        endLogging (l -> {
+            l.w ("[*] - [{}] SKIPPED...", result.getName ());
+            l.w (result.getThrowable ()
+                .getMessage ());
+        }, TEST_LOG);
     }
 
     /*

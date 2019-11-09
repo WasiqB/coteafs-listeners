@@ -17,10 +17,15 @@ package com.github.wasiqb.coteafs.listeners.config;
 
 import com.github.wasiqb.coteafs.config.util.BasePojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
+@Getter
+@Setter
 public class ListenerConfig extends BasePojo {
     private LogSetting   log;
     private RetrySetting recover;
@@ -32,41 +37,5 @@ public class ListenerConfig extends BasePojo {
     public ListenerConfig () {
         this.recover = new RetrySetting ();
         this.log = new LogSetting ();
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the log
-     */
-    public LogSetting getLog () {
-        return this.log;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the recover
-     */
-    public RetrySetting getRecover () {
-        return this.recover;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param log the log to set
-     */
-    public void setLog (final LogSetting log) {
-        this.log = log;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param recover the recover to set
-     */
-    public void setRecover (final RetrySetting recover) {
-        this.recover = recover;
     }
 }

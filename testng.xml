@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="Listener Suite">
 	<listeners>
 		<listener class-name="com.github.wasiqb.coteafs.listeners.ConfigListener" />
 		<listener class-name="com.github.wasiqb.coteafs.listeners.SuiteListener" />
@@ -8,8 +8,9 @@
 		<listener class-name="com.github.wasiqb.coteafs.listeners.ExecutionListener" />
 		<listener class-name="com.github.wasiqb.coteafs.listeners.DataProviderListener" />
 		<listener class-name="com.github.wasiqb.coteafs.listeners.AnnotationTransformer" />
+		<listener class-name="com.github.wasiqb.coteafs.listeners.SuiteResultReporter" />
 	</listeners>
-	<test name="Test">
+	<test name="Listener Test">
 		<classes>
 			<class name="com.github.wasiqb.coteafs.listeners.ListenerTest" />
 		</classes>

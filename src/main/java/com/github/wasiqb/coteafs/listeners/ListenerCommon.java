@@ -31,8 +31,8 @@ import com.github.wasiqb.coteafs.logger.Loggy;
  * @since Sep 25, 2018
  */
 class ListenerCommon {
+    public static final LogSetting        LOG_CONFIG;
     protected static final ListenerConfig CONFIG;
-    protected static final LogSetting     LOG_CONFIG;
     private static final String           LINE;
 
     static {

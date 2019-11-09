@@ -17,14 +17,20 @@ package com.github.wasiqb.coteafs.listeners.config;
 
 import com.github.wasiqb.coteafs.config.util.BasePojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
+@Getter
+@Setter
 public class LogSetting extends BasePojo {
     private boolean configurations;
     private boolean dataProvider;
     private boolean execution;
+    private boolean suiteResults;
     private boolean suites;
     private boolean tests;
 
@@ -38,95 +44,6 @@ public class LogSetting extends BasePojo {
         this.tests = true;
         this.execution = true;
         this.dataProvider = true;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the configurations
-     */
-    public boolean isConfigurations () {
-        return this.configurations;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the dataProvider
-     */
-    public boolean isDataProvider () {
-        return this.dataProvider;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the execution
-     */
-    public boolean isExecution () {
-        return this.execution;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the suites
-     */
-    public boolean isSuites () {
-        return this.suites;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @return the tests
-     */
-    public boolean isTests () {
-        return this.tests;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param configurations the configurations to set
-     */
-    public void setConfigurations (final boolean configurations) {
-        this.configurations = configurations;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param dataProvider the dataProvider to set
-     */
-    public void setDataProvider (final boolean dataProvider) {
-        this.dataProvider = dataProvider;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param execution the execution to set
-     */
-    public void setExecution (final boolean execution) {
-        this.execution = execution;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param suites the suites to set
-     */
-    public void setSuites (final boolean suites) {
-        this.suites = suites;
-    }
-
-    /**
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     * @param tests the tests to set
-     */
-    public void setTests (final boolean tests) {
-        this.tests = tests;
+        this.suiteResults = true;
     }
 }

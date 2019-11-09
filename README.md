@@ -38,6 +38,7 @@ log:
    execution: true
    suites: true
    tests: true
+   suite_results: true
 recover:
    enable: true
    logging: true
@@ -45,6 +46,8 @@ recover:
    on_exceptions:
       - <Array list of fully qualified exception class name>
 ```
+
+> It also supports config file with formats `json`, `xml` and `properties`.
 
 ## Usage
 
@@ -54,7 +57,7 @@ Add dependency to your POM file.
 <dependency>
     <groupId>com.github.wasiqb.coteafs</groupId>
     <artifactId>listeners</artifactId>
-    <version>2.0.0</version>
+    <version>2.2.0</version>
 </dependency>
 ```
 
@@ -71,6 +74,7 @@ Add listeners in `testng.xml` file in listener's block.
   <listener class-name="com.github.wasiqb.coteafs.listeners.ExecutionListener" />
   <listener class-name="com.github.wasiqb.coteafs.listeners.DataProviderListener" />
   <listener class-name="com.github.wasiqb.coteafs.listeners.AnnotationTransformer" />
+  <listener class-name="com.github.wasiqb.coteafs.listeners.SuiteResultReporter" />
 </listeners>
 . . .
 ```
@@ -91,7 +95,7 @@ Add listeners in your `pom.xml` file.
 			<property>
 				<name>listener</name>
 				<value>
-					com.github.wasiqb.coteafs.listeners.ConfigListener,com.github.wasiqb.coteafs.listeners.SuiteListener,com.github.wasiqb.coteafs.listeners.TestListener,com.github.wasiqb.coteafs.listeners.ExecutionListener,com.github.wasiqb.coteafs.listeners.DataProviderListener,com.github.wasiqb.coteafs.listeners.AnnotationTransformer
+					com.github.wasiqb.coteafs.listeners.ConfigListener,com.github.wasiqb.coteafs.listeners.SuiteListener,com.github.wasiqb.coteafs.listeners.TestListener,com.github.wasiqb.coteafs.listeners.ExecutionListener,com.github.wasiqb.coteafs.listeners.DataProviderListener,com.github.wasiqb.coteafs.listeners.AnnotationTransformer,com.github.wasiqb.coteafs.listeners.SuiteResultReporter
 				</value>
 			</property>
 		</properties>
@@ -104,72 +108,81 @@ Add listeners in your `pom.xml` file.
 ### Sample output Runtime Logging
 
 ```bash
-[19:36:08.443] [INFO ] - ================================================== (ExecutionListener:65)
-[19:36:08.445] [INFO ] - TestNG Execution started... (ExecutionListener:65)
-[19:36:08.446] [INFO ] - ================================================== (ExecutionListener:65)
-[19:36:08.540] [INFO ] - ================================================== (SuiteListener:65)
-[19:36:08.540] [INFO ] - Test Suite Execution started for Suite [Suite]... (SuiteListener:65)
-[19:36:08.541] [INFO ] - ================================================== (SuiteListener:65)
-[19:36:08.543] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.543] [INFO ] - Test Execution started for Test [Test]... (TestListener:65)
-[19:36:08.543] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.553] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.553] [INFO ] - Configuration method [setupTest] is executing... (ConfigListener:65)
-[19:36:08.554] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.560] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.560] [INFO ] - [+] - Configuration method [setupTest] PASSED... (ConfigListener:65)
-[19:36:08.562] [INFO ] - Total Time taken: 0.005 secs (ConfigListener:65)
-[19:36:08.562] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.589] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.590] [INFO ] - Test Execution started for method [testRetry]... (TestListener:65)
-[19:36:08.590] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.597] [INFO ] - ================================================== (FailureRetry:65)
-[19:36:08.598] [INFO ] - Started to retry the failed test [testRetry]... (FailureRetry:65)
-[19:36:08.598] [INFO ] - ================================================== (FailureRetry:65)
-[19:36:08.599] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.599] [WARN ] - [*] - [testRetry] SKIPPED... (TestListener:85)
-[19:36:08.600] [INFO ] - Total Time taken: 0.010 secs (TestListener:65)
-[19:36:08.600] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.601] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.601] [INFO ] - Test Execution started for method [testRetry]... (TestListener:65)
-[19:36:08.601] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.603] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.603] [INFO ] - [+] - [testRetry] PASSED... (TestListener:65)
-[19:36:08.604] [INFO ] - Total Time taken: 0.002 secs (TestListener:65)
-[19:36:08.604] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.608] [INFO ] - ================================================== (DataProviderListener:65)
-[19:36:08.609] [INFO ] - Data provider [testSuccess] execution started... (DataProviderListener:65)
-[19:36:08.609] [INFO ] - ================================================== (DataProviderListener:65)
-[19:36:08.610] [INFO ] - ================================================== (DataProviderListener:65)
-[19:36:08.610] [INFO ] - Data provider [testSuccess] execution completed... (DataProviderListener:65)
-[19:36:08.611] [INFO ] - Total Time taken: 0.002 secs (DataProviderListener:65)
-[19:36:08.611] [INFO ] - ================================================== (DataProviderListener:65)
-[19:36:08.616] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.616] [INFO ] - Test Execution started for method [testSuccess]... (TestListener:65)
-[19:36:08.617] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.619] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.620] [INFO ] - [+] - [testSuccess] PASSED... (TestListener:65)
-[19:36:08.620] [INFO ] - Total Time taken: 0.003 secs (TestListener:65)
-[19:36:08.620] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.622] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.623] [INFO ] - Configuration method [teardownTest] is executing... (ConfigListener:65)
-[19:36:08.627] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.629] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.630] [INFO ] - [+] - Configuration method [teardownTest] PASSED... (ConfigListener:65)
-[19:36:08.632] [INFO ] - Total Time taken: 0.007 secs (ConfigListener:65)
-[19:36:08.632] [INFO ] - ================================================== (ConfigListener:65)
-[19:36:08.633] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.633] [INFO ] - Test Execution finished for Test [Test]... (TestListener:65)
-[19:36:08.634] [INFO ] - Total Time taken: 0.017 secs (TestListener:65)
-[19:36:08.634] [INFO ] - ================================================== (TestListener:65)
-[19:36:08.636] [INFO ] - ================================================== (SuiteListener:65)
-[19:36:08.636] [INFO ] - Test Suite Execution finished for Suite [Suite]... (SuiteListener:65)
-[19:36:08.636] [INFO ] - Total Time taken: 0.095 secs (SuiteListener:65)
-[19:36:08.637] [INFO ] - ================================================== (SuiteListener:65)
-[19:36:08.639] [INFO ] - ================================================== (ExecutionListener:65)
-[19:36:08.640] [INFO ] - TestNG Execution finished... (ExecutionListener:65)
-[19:36:08.641] [INFO ] - Total Time taken: 0.198 secs (ExecutionListener:65)
-[19:36:08.641] [INFO ] - ================================================== (ExecutionListener:65) 
+[15:22:28.266] [INFO ] - ================================================== (ExecutionListener:190) 
+[15:22:28.268] [INFO ] - TestNG Execution started... (ExecutionListener:190) 
+[15:22:28.268] [INFO ] - ================================================== (ExecutionListener:190) 
+[15:22:28.441] [INFO ] - ================================================== (SuiteListener:190) 
+[15:22:28.442] [INFO ] - Test Suite Execution started for Suite [Listener Suite]... (SuiteListener:190) 
+[15:22:28.442] [INFO ] - ================================================== (SuiteListener:190) 
+[15:22:28.445] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.446] [INFO ] - Test Execution started for Test [Listener Test]... (TestListener:190) 
+[15:22:28.446] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.458] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.458] [INFO ] - Configuration method [setupTest] is executing... (ConfigListener:190) 
+[15:22:28.458] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.469] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.473] [INFO ] - [+] - Configuration method [setupTest] PASSED... (ConfigListener:190) 
+[15:22:28.479] [INFO ] - Total Time taken: 0.008 secs (ConfigListener:190) 
+[15:22:28.485] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.519] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.519] [INFO ] - Test Execution started for method [testRetry]... (TestListener:190) 
+[15:22:28.520] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.530] [INFO ] - ================================================== (FailureRetry:190) 
+[15:22:28.532] [INFO ] - Started to retry the failed test [testRetry]... (FailureRetry:190) 
+[15:22:28.533] [INFO ] - ================================================== (FailureRetry:190) 
+[15:22:28.534] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.534] [WARN ] - [*] - [testRetry] SKIPPED... (TestListener:265) 
+[15:22:28.534] [WARN ] - null (TestListener:265) 
+[15:22:28.534] [INFO ] - Total Time taken: 0.014 secs (TestListener:190) 
+[15:22:28.534] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.535] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.535] [INFO ] - Test Execution started for method [testRetry]... (TestListener:190) 
+[15:22:28.535] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.539] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.540] [INFO ] - [+] - [testRetry] PASSED... (TestListener:190) 
+[15:22:28.540] [INFO ] - Total Time taken: 0.004 secs (TestListener:190) 
+[15:22:28.541] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.555] [INFO ] - ================================================== (DataProviderListener:190) 
+[15:22:28.555] [INFO ] - Data provider [testSuccess] execution started... (DataProviderListener:190) 
+[15:22:28.555] [INFO ] - ================================================== (DataProviderListener:190) 
+[15:22:28.557] [INFO ] - ================================================== (DataProviderListener:190) 
+[15:22:28.559] [INFO ] - Data provider [testSuccess] execution completed... (DataProviderListener:190) 
+[15:22:28.560] [INFO ] - Total Time taken: 0.002 secs (DataProviderListener:190) 
+[15:22:28.560] [INFO ] - ================================================== (DataProviderListener:190) 
+[15:22:28.563] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.564] [INFO ] - Test Execution started for method [testSuccess]... (TestListener:190) 
+[15:22:28.564] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.567] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.567] [INFO ] - [+] - [testSuccess] PASSED... (TestListener:190) 
+[15:22:28.568] [INFO ] - Total Time taken: 0.004 secs (TestListener:190) 
+[15:22:28.570] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.574] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.580] [INFO ] - Configuration method [teardownTest] is executing... (ConfigListener:190) 
+[15:22:28.581] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.584] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.585] [INFO ] - [+] - Configuration method [teardownTest] PASSED... (ConfigListener:190) 
+[15:22:28.586] [INFO ] - Total Time taken: 0.011 secs (ConfigListener:190) 
+[15:22:28.587] [INFO ] - ================================================== (ConfigListener:190) 
+[15:22:28.587] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.587] [INFO ] - Test Execution finished for Test [Listener Test]... (TestListener:190) 
+[15:22:28.588] [INFO ] - Total Time taken: 0.024 secs (TestListener:190) 
+[15:22:28.588] [INFO ] - ================================================== (TestListener:190) 
+[15:22:28.592] [INFO ] - ================================================== (SuiteListener:190) 
+[15:22:28.593] [INFO ] - Test Suite Execution finished for Suite [Listener Suite]... (SuiteListener:190) 
+[15:22:28.593] [INFO ] - Total Time taken: 0.151 secs (SuiteListener:190) 
+[15:22:28.594] [INFO ] - ================================================== (SuiteListener:190) 
+[15:22:28.596] [INFO ] - ================================================== (SuiteResultReporter:190) 
+[15:22:28.597] [INFO ] - Suite [Listener Suite]: Passed (SuiteResultReporter:190) 
+[15:22:28.598] [INFO ] - -------------------------------------------------- (SuiteResultReporter:190) 
+[15:22:28.598] [INFO ] - Total Tests: 2 (SuiteResultReporter:190) 
+[15:22:28.598] [INFO ] - Passed Tests: 2 (SuiteResultReporter:190) 
+[15:22:28.599] [INFO ] - Failed Tests: 0 (SuiteResultReporter:190) 
+[15:22:28.599] [INFO ] - Skipped Tests: 1 (SuiteResultReporter:190) 
+[15:22:28.600] [INFO ] - ================================================== (SuiteResultReporter:190) 
+[15:22:28.600] [INFO ] - ================================================== (ExecutionListener:190) 
+[15:22:28.601] [INFO ] - TestNG Execution finished... (ExecutionListener:190) 
+[15:22:28.602] [INFO ] - Total Time taken: 0.337 secs (ExecutionListener:190) 
+[15:22:28.602] [INFO ] - ================================================== (ExecutionListener:190)  
 ```
 
 ## :question: Need Assistance?

@@ -20,7 +20,6 @@ import static com.github.wasiqb.coteafs.logger.Loggy.init;
 import java.util.Map;
 
 import com.github.wasiqb.coteafs.logger.Loggy;
-
 import org.testng.IDataProviderListener;
 import org.testng.IDataProviderMethod;
 import org.testng.ITestContext;
@@ -31,15 +30,15 @@ import org.testng.ITestNGMethod;
  * @since 15-Sep-2019
  */
 public class DataProviderListener extends ListenerCommon implements IDataProviderListener {
-    private static final boolean DP_LOG = LOG_CONFIG.isDataProvider ();
-    private static final Loggy   LOG    = init ();
+    private static final boolean DP_LOG = ListenerCommon.LOG_CONFIG.isDataProvider();
+    private static final Loggy   LOG    = init();
 
     /**
      * @author Wasiq Bhamla
      * @since 15-Sep-2019
      */
-    public DataProviderListener () {
-        super (LOG);
+    public DataProviderListener() {
+        super(LOG);
     }
 
     /*
@@ -49,12 +48,13 @@ public class DataProviderListener extends ListenerCommon implements IDataProvide
      * IDataProviderMethod, org.testng.ITestNGMethod, org.testng.ITestContext)
      */
     @Override
-    public void afterDataProviderExecution (final IDataProviderMethod dataProviderMethod, final ITestNGMethod method,
-        final ITestContext iTestContext) {
-        endLogging (l -> {
-            l.i ("Data provider [{}] execution completed...", method.getMethodName ());
-            final Map<String, String> params = method.findMethodParameters (iTestContext.getCurrentXmlTest ());
-            params.forEach ( (k, v) -> l.i ("{}: {}", k, v));
+    public void afterDataProviderExecution(final IDataProviderMethod dataProviderMethod,
+        final ITestNGMethod method, final ITestContext iTestContext) {
+        endLogging(l -> {
+            l.i("Data provider [{}] execution completed...", method.getMethodName());
+            final Map<String, String> params = method.findMethodParameters(
+                iTestContext.getCurrentXmlTest());
+            params.forEach((k, v) -> l.i("{}: {}", k, v));
         }, DP_LOG);
     }
 
@@ -65,8 +65,9 @@ public class DataProviderListener extends ListenerCommon implements IDataProvide
      * IDataProviderMethod, org.testng.ITestNGMethod, org.testng.ITestContext)
      */
     @Override
-    public void beforeDataProviderExecution (final IDataProviderMethod dataProviderMethod, final ITestNGMethod method,
-        final ITestContext iTestContext) {
-        startLogging (l -> l.i ("Data provider [{}] execution started...", method.getMethodName ()), DP_LOG);
+    public void beforeDataProviderExecution(final IDataProviderMethod dataProviderMethod,
+        final ITestNGMethod method, final ITestContext iTestContext) {
+        startLogging(l -> l.i("Data provider [{}] execution started...", method.getMethodName()),
+            DP_LOG);
     }
 }

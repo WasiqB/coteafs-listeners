@@ -19,7 +19,6 @@ import java.util.List;
 
 import com.github.wasiqb.coteafs.listeners.config.RetrySetting;
 import com.github.wasiqb.coteafs.logger.Loggy;
-
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
@@ -28,39 +27,42 @@ import org.testng.ITestResult;
  * @since 17-Sep-2019
  */
 public class FailureRetry extends ListenerCommon implements IRetryAnalyzer {
-    private static final Loggy LOG = Loggy.init ();
-    private int                retryCount;
+    private static final Loggy LOG = Loggy.init();
+    private              int   retryCount;
 
     /**
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
-    public FailureRetry () {
-        super (LOG);
+    public FailureRetry() {
+        super(LOG);
     }
 
     /*
      * (non-Javadoc)
      * @see @see org.testng.IRetryAnalyzer#retry(org.testng.ITestResult)
      */
-    @SuppressWarnings ("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
-    public boolean retry (final ITestResult result) {
-        final RetrySetting setting = CONFIG.getRecover ();
-        if (!result.isSuccess () && setting.isEnable ()) {
-            final boolean doLog = setting.isLogging ();
-            final int maxRetry = setting.getMaxRetry ();
-            final List<String> exceptions = setting.getOnExceptions ();
-            startLogging (l -> l.i ("Started to retry the failed test [{}]...", result.getName ()), doLog);
+    public boolean retry(final ITestResult result) {
+        final RetrySetting setting = ListenerCommon.CONFIG.getRecover();
+        if (!result.isSuccess() && setting.isEnable()) {
+            final boolean doLog = setting.isLogging();
+            final int maxRetry = setting.getMaxRetry();
+            final List<String> exceptions = setting.getOnExceptions();
+            startLogging(l -> l.i("Started to retry the failed test [{}]...", result.getName()),
+                doLog);
             while (this.retryCount++ < maxRetry) {
                 for (final String ex : exceptions) {
                     try {
-                        final Class<? extends Exception> cls = (Class<? extends Exception>) Class.forName (ex);
-                        if (cls.isInstance (result.getThrowable ())) {
+                        final Class<? extends Exception> cls = (Class<? extends Exception>) Class.forName(
+                            ex);
+                        if (cls.isInstance(result.getThrowable())) {
                             return true;
                         }
                     } catch (final ClassNotFoundException e) {
-                        startLogging (l -> l.e ("Exception Class not found: {}", e.getMessage ()), doLog);
+                        startLogging(l -> l.e("Exception Class not found: {}", e.getMessage()),
+                            doLog);
                     }
                 }
             }

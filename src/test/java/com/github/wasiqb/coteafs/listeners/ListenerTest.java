@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2017-2020, Wasiq Bhamla.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,52 +37,42 @@ public class ListenerTest {
      * @since Sep 25, 2018
      */
     @BeforeTest
-    public void setupTest () {
+    public void setupTest() {
         countRetry = 0;
-        return;
     }
 
     /**
-     * @author wasiqb
-     * @since Sep 25, 2018
-     */
-    @AfterTest
-    public void teardownTest () {
-        return;
-    }
-
-    /**
+     * @return data
      * @author Wasiq Bhamla
      * @since 15-Sep-2019
-     * @return data
      */
     @DataProvider
-    public Iterator<Object []> testData () {
-        final List<Object []> data = new ArrayList<> ();
-        data.add (new Object [] { true });
-        return data.iterator ();
+    public Iterator<Object[]> testData() {
+        final List<Object[]> data = new ArrayList<>();
+        data.add(new Object[] { true });
+        return data.iterator();
     }
 
     /**
+     * @throws FileNotFoundException
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @throws FileNotFoundException
      */
     @Test
-    public void testRetry () throws FileNotFoundException {
+    public void testRetry() throws FileNotFoundException {
         countRetry++;
         if (countRetry < 2) {
-            throw new FileNotFoundException ();
+            throw new FileNotFoundException();
         }
     }
 
     /**
-     * @author wasiqb
      * @param value
+     * @author wasiqb
      * @since Sep 25, 2018
      */
-    @Test (dataProvider = "testData")
-    public void testSuccess (final boolean value) {
-        Assert.assertTrue (value);
+    @Test(dataProvider = "testData")
+    public void testSuccess(final boolean value) {
+        Assert.assertTrue(value);
     }
 }

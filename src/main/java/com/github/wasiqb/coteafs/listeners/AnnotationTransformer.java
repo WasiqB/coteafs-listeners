@@ -33,8 +33,8 @@ public class AnnotationTransformer implements IAnnotationTransformer {
      * java.lang.reflect.Method)
      */
     @Override
-    public void transform (final ITestAnnotation annotation, final Class testClass, final Constructor testConstructor,
-        final Method testMethod) {
-        annotation.setRetryAnalyzer (FailureRetry.class);
+    public void transform(final ITestAnnotation annotation, final Class testClass,
+        final Constructor testConstructor, final Method testMethod) {
+        annotation.setRetryAnalyzer(FailureRetry.class);
     }
 }

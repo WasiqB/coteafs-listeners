@@ -34,82 +34,82 @@ public class RetrySetting extends BasePojo {
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
-    public RetrySetting () {
+    public RetrySetting() {
         this.enable = false;
         this.maxRetry = 2;
         this.logging = true;
-        this.onExceptions = new ArrayList<> ();
+        this.onExceptions = new ArrayList<>();
     }
 
     /**
+     * @return the maxRetry
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @return the maxRetry
      */
-    public int getMaxRetry () {
+    public int getMaxRetry() {
         return this.maxRetry;
     }
 
     /**
+     * @return the onClasses
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @return the onClasses
      */
-    public List<String> getOnExceptions () {
+    public List<String> getOnExceptions() {
         return this.onExceptions;
     }
 
     /**
+     * @return the enable
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @return the enable
      */
-    public boolean isEnable () {
+    public boolean isEnable() {
         return this.enable;
     }
 
     /**
+     * @return the logging
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @return the logging
      */
-    public boolean isLogging () {
+    public boolean isLogging() {
         return this.logging;
     }
 
     /**
+     * @param enable the enable to set
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @param enable the enable to set
      */
-    public void setEnable (final boolean enable) {
+    public void setEnable(final boolean enable) {
         this.enable = enable;
     }
 
     /**
+     * @param logging the logging to set
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @param logging the logging to set
      */
-    public void setLogging (final boolean logging) {
+    public void setLogging(final boolean logging) {
         this.logging = logging;
     }
 
     /**
+     * @param maxRetry the maxRetry to set
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @param maxRetry the maxRetry to set
      */
-    public void setMaxRetry (final int maxRetry) {
+    public void setMaxRetry(final int maxRetry) {
         this.maxRetry = maxRetry;
     }
 
     /**
+     * @param onExceptions the onClasses to set
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
-     * @param onExceptions the onClasses to set
      */
-    public void setOnExceptions (final List<String> onExceptions) {
+    public void setOnExceptions(final List<String> onExceptions) {
         this.onExceptions = onExceptions;
     }
 }

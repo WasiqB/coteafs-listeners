@@ -2,7 +2,7 @@
 status: "WARN"
 log_dir: "/logs"
 loggers:
-- level: "DEBUG"
-  message_pattern: "[%d{HH:mm:ss.SSS}] [%-5level] - %msg (%logger{1}:%L) %throwable{short.message}%n"
-  name: "console-log"
-  type: "CONSOLE"
+  - level: "DEBUG"
+    message_pattern: "[%d{HH:mm:ss.SSS}] [%-5level] - %msg (%logger{1}:%L) %throwable{short.message}%n"
+    name: "console-log"
+    type: "CONSOLE"

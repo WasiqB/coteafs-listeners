@@ -16,7 +16,6 @@
 package com.github.wasiqb.coteafs.listeners.config;
 
 import com.github.wasiqb.coteafs.config.util.BasePojo;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,7 +37,7 @@ public class LogSetting extends BasePojo {
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
-    public LogSetting () {
+    public LogSetting() {
         this.configurations = true;
         this.suites = true;
         this.tests = true;

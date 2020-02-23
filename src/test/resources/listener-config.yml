@@ -10,4 +10,4 @@ recover:
   logging: true
   max_retry: 2
   on_exceptions:
-   - java.io.FileNotFoundException
+    - java.io.FileNotFoundException

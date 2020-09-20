@@ -10,13 +10,13 @@
     <parent>
         <groupId>com.github.wasiqb.coteafs</groupId>
         <artifactId>parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.5</version>
     </parent>
 
     <properties>
-        <coteafs.logger.version>2.4.0</coteafs.logger.version>
+        <coteafs.logger.version>2.5.0</coteafs.logger.version>
         <coteafs.config.version>2.3.0</coteafs.config.version>
-        <coteafs.error.version>1.13.0</coteafs.error.version>
+        <coteafs.error.version>1.15.0</coteafs.error.version>
         <lombok.version>1.18.12</lombok.version>
     </properties>
 

@@ -15,9 +15,8 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static com.github.wasiqb.coteafs.logger.Loggy.init;
-
-import com.github.wasiqb.coteafs.logger.Loggy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 
@@ -26,15 +25,15 @@ import org.testng.ISuiteListener;
  * @since Sep 25, 2018
  */
 public class SuiteListener extends ListenerCommon implements ISuiteListener {
-    private static final Loggy   LOG       = init();
-    private static final boolean SUITE_LOG = ListenerCommon.LOG_CONFIG.isSuites();
+    private static final Logger  LOG       = LogManager.getLogger ();
+    private static final boolean SUITE_LOG = ListenerCommon.LOG_CONFIG.isSuites ();
 
     /**
      * @author Wasiq Bhamla
      * @since 14-Sep-2019
      */
-    public SuiteListener() {
-        super(LOG);
+    public SuiteListener () {
+        super (LOG);
     }
 
     /*
@@ -42,9 +41,8 @@ public class SuiteListener extends ListenerCommon implements ISuiteListener {
      * @see org.testng.ISuiteListener#onFinish(org.testng.ISuite)
      */
     @Override
-    public void onFinish(final ISuite suite) {
-        endLogging(l -> l.i("Test Suite Execution finished for Suite [{}]...", suite.getName()),
-            SUITE_LOG);
+    public void onFinish (final ISuite suite) {
+        endLogging (l -> l.info ("Test Suite Execution finished for Suite [{}]...", suite.getName ()), SUITE_LOG);
     }
 
     /*
@@ -52,8 +50,7 @@ public class SuiteListener extends ListenerCommon implements ISuiteListener {
      * @see org.testng.ISuiteListener#onStart(org.testng.ISuite)
      */
     @Override
-    public void onStart(final ISuite suite) {
-        startLogging(l -> l.i("Test Suite Execution started for Suite [{}]...", suite.getName()),
-            SUITE_LOG);
+    public void onStart (final ISuite suite) {
+        startLogging (l -> l.info ("Test Suite Execution started for Suite [{}]...", suite.getName ()), SUITE_LOG);
     }
 }

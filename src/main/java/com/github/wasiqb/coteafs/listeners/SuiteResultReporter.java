@@ -15,13 +15,13 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static com.github.wasiqb.coteafs.logger.Loggy.init;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 import java.util.List;
 import java.util.Map;
 
-import com.github.wasiqb.coteafs.logger.Loggy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.IReporter;
 import org.testng.ISuite;
 import org.testng.ISuiteResult;
@@ -33,10 +33,10 @@ import org.testng.xml.XmlSuite;
  * @since 09-Nov-2019
  */
 public class SuiteResultReporter implements IReporter {
-    private static final String  LINE             = repeat('=', 50);
-    private static final Loggy   LOG              = init();
-    private static final String  SUB_LINE         = repeat('-', 50);
-    private static final boolean SUITE_RESULT_LOG = ListenerCommon.LOG_CONFIG.isSuiteResults();
+    private static final String  LINE             = repeat ('=', 50);
+    private static final Logger  LOG              = LogManager.getLogger ();
+    private static final String  SUB_LINE         = repeat ('-', 50);
+    private static final boolean SUITE_RESULT_LOG = ListenerCommon.LOG_CONFIG.isSuiteResults ();
 
     /*
      * (non-Javadoc)
@@ -44,26 +44,26 @@ public class SuiteResultReporter implements IReporter {
      * java.lang.String)
      */
     @Override
-    public void generateReport(final List<XmlSuite> xmlSuites, final List<ISuite> suites,
+    public void generateReport (final List<XmlSuite> xmlSuites, final List<ISuite> suites,
         final String outputDirectory) {
         if (SUITE_RESULT_LOG) {
             for (final ISuite suite : suites) {
-                LOG.i(LINE);
-                LOG.i("Suite [{}]: {}", suite.getName(), suite.getSuiteState()
-                    .isFailed() ? "Failed" : "Passed");
-                LOG.i(SUB_LINE);
-                final Map<String, ISuiteResult> results = suite.getResults();
-                for (final ISuiteResult result : results.values()) {
-                    final ITestContext tc = result.getTestContext();
-                    LOG.i("Total Tests: {}", tc.getAllTestMethods().length);
-                    LOG.i("Passed Tests: {}", tc.getPassedTests()
-                        .size());
-                    LOG.i("Failed Tests: {}", tc.getFailedTests()
-                        .size());
-                    LOG.i("Skipped Tests: {}", tc.getSkippedTests()
-                        .size());
+                LOG.info (LINE);
+                LOG.info ("Suite [{}]: {}", suite.getName (), suite.getSuiteState ()
+                                                                  .isFailed () ? "Failed" : "Passed");
+                LOG.info (SUB_LINE);
+                final Map<String, ISuiteResult> results = suite.getResults ();
+                for (final ISuiteResult result : results.values ()) {
+                    final ITestContext tc = result.getTestContext ();
+                    LOG.info ("Total Tests: {}", tc.getAllTestMethods ().length);
+                    LOG.info ("Passed Tests: {}", tc.getPassedTests ()
+                        .size ());
+                    LOG.info ("Failed Tests: {}", tc.getFailedTests ()
+                        .size ());
+                    LOG.info ("Skipped Tests: {}", tc.getSkippedTests ()
+                        .size ());
                 }
-                LOG.i(LINE);
+                LOG.info (LINE);
             }
         }
     }

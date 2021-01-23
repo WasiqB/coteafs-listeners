@@ -15,17 +15,14 @@
  */
 package com.github.wasiqb.coteafs.listeners.config;
 
-import com.github.wasiqb.coteafs.config.util.BasePojo;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
-@Getter
-@Setter
-public class LogSetting extends BasePojo {
+@Data
+public class LogSetting {
     private boolean configurations;
     private boolean dataProvider;
     private boolean execution;
@@ -37,7 +34,7 @@ public class LogSetting extends BasePojo {
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
-    public LogSetting() {
+    public LogSetting () {
         this.configurations = true;
         this.suites = true;
         this.tests = true;

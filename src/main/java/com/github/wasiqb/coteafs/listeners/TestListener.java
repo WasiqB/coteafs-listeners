@@ -15,9 +15,8 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static com.github.wasiqb.coteafs.logger.Loggy.init;
-
-import com.github.wasiqb.coteafs.logger.Loggy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -27,15 +26,15 @@ import org.testng.ITestResult;
  * @since Sep 25, 2018
  */
 public class TestListener extends ListenerCommon implements ITestListener {
-    private static final Loggy   LOG      = init();
-    private static final boolean TEST_LOG = ListenerCommon.LOG_CONFIG.isTests();
+    private static final Logger  LOG      = LogManager.getLogger ();
+    private static final boolean TEST_LOG = ListenerCommon.LOG_CONFIG.isTests ();
 
     /**
      * @author wasiqb
      * @since Sep 25, 2018
      */
-    public TestListener() {
-        super(LOG);
+    public TestListener () {
+        super (LOG);
     }
 
     /*
@@ -43,9 +42,8 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onFinish(org.testng.ITestContext)
      */
     @Override
-    public void onFinish(final ITestContext context) {
-        endLogging(l -> l.i("Test Execution finished for Test [{}]...", context.getName()),
-            TEST_LOG);
+    public void onFinish (final ITestContext context) {
+        endLogging (l -> l.info ("Test Execution finished for Test [{}]...", context.getName ()), TEST_LOG);
     }
 
     /*
@@ -53,9 +51,8 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onStart(org.testng.ITestContext)
      */
     @Override
-    public void onStart(final ITestContext context) {
-        startLogging(l -> l.i("Test Execution started for Test [{}]...", context.getName()),
-            TEST_LOG);
+    public void onStart (final ITestContext context) {
+        startLogging (l -> l.info ("Test Execution started for Test [{}]...", context.getName ()), TEST_LOG);
     }
 
     /*
@@ -65,8 +62,8 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * ITestResult)
      */
     @Override
-    public void onTestFailedButWithinSuccessPercentage(final ITestResult result) {
-        endLogging(l -> l.e("[--] - [{}] PARTIAL FAILED...", result.getName()), TEST_LOG);
+    public void onTestFailedButWithinSuccessPercentage (final ITestResult result) {
+        endLogging (l -> l.error ("[--] - [{}] PARTIAL FAILED...", result.getName ()), TEST_LOG);
     }
 
     /*
@@ -75,11 +72,11 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * org.testng.ITestListener#onTestFailedWithTimeout(org.testng.ITestResult)
      */
     @Override
-    public void onTestFailedWithTimeout(final ITestResult result) {
-        endLogging(l -> {
-            l.e("[-] - [{}] FAILED with Timeout...", result.getName());
-            l.e(result.getThrowable()
-                .getMessage());
+    public void onTestFailedWithTimeout (final ITestResult result) {
+        endLogging (l -> {
+            l.error ("[-] - [{}] FAILED with Timeout...", result.getName ());
+            l.error (result.getThrowable ()
+                .getMessage ());
         }, TEST_LOG);
     }
 
@@ -88,11 +85,11 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onTestFailure(org.testng.ITestResult)
      */
     @Override
-    public void onTestFailure(final ITestResult result) {
-        endLogging(l -> {
-            l.f("[-] - [{}] FAILED...", result.getName());
-            l.f(result.getThrowable()
-                .getMessage());
+    public void onTestFailure (final ITestResult result) {
+        endLogging (l -> {
+            l.fatal ("[-] - [{}] FAILED...", result.getName ());
+            l.fatal (result.getThrowable ()
+                .getMessage ());
         }, TEST_LOG);
     }
 
@@ -101,11 +98,11 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onTestSkipped(org.testng.ITestResult)
      */
     @Override
-    public void onTestSkipped(final ITestResult result) {
-        endLogging(l -> {
-            l.w("[*] - [{}] SKIPPED...", result.getName());
-            l.w(result.getThrowable()
-                .getMessage());
+    public void onTestSkipped (final ITestResult result) {
+        endLogging (l -> {
+            l.warn ("[*] - [{}] SKIPPED...", result.getName ());
+            l.warn (result.getThrowable ()
+                .getMessage ());
         }, TEST_LOG);
     }
 
@@ -114,9 +111,8 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onTestStart(org.testng.ITestResult)
      */
     @Override
-    public void onTestStart(final ITestResult result) {
-        startLogging(l -> l.i("Test Execution started for method [{}]...", result.getName()),
-            TEST_LOG);
+    public void onTestStart (final ITestResult result) {
+        startLogging (l -> l.info ("Test Execution started for method [{}]...", result.getName ()), TEST_LOG);
     }
 
     /*
@@ -124,7 +120,7 @@ public class TestListener extends ListenerCommon implements ITestListener {
      * @see org.testng.ITestListener#onTestSuccess(org.testng.ITestResult)
      */
     @Override
-    public void onTestSuccess(final ITestResult result) {
-        endLogging(l -> l.i("[+] - [{}] PASSED...", result.getName()), TEST_LOG);
+    public void onTestSuccess (final ITestResult result) {
+        endLogging (l -> l.info ("[+] - [{}] PASSED...", result.getName ()), TEST_LOG);
     }
 }

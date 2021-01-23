@@ -15,9 +15,8 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static com.github.wasiqb.coteafs.logger.Loggy.init;
-
-import com.github.wasiqb.coteafs.logger.Loggy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.IConfigurationListener;
 import org.testng.ITestResult;
 
@@ -26,15 +25,15 @@ import org.testng.ITestResult;
  * @since Sep 25, 2018
  */
 public class ConfigListener extends ListenerCommon implements IConfigurationListener {
-    private static final boolean CONFIG_LOG = ListenerCommon.LOG_CONFIG.isConfigurations();
-    private static final Loggy   LOG        = init();
+    private static final boolean CONFIG_LOG = ListenerCommon.LOG_CONFIG.isConfigurations ();
+    private static final Logger  LOG        = LogManager.getLogger ();
 
     /**
      * @author wasiqb
      * @since Sep 25, 2018
      */
-    public ConfigListener() {
-        super(LOG);
+    public ConfigListener () {
+        super (LOG);
     }
 
     /*
@@ -43,9 +42,8 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      * ITestResult)
      */
     @Override
-    public void beforeConfiguration(final ITestResult tr) {
-        startLogging(l -> l.i("Configuration method [{}] is executing...", tr.getName()),
-            CONFIG_LOG);
+    public void beforeConfiguration (final ITestResult tr) {
+        startLogging (l -> l.info ("Configuration method [{}] is executing...", tr.getName ()), CONFIG_LOG);
     }
 
     /*
@@ -54,11 +52,11 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      * ITestResult)
      */
     @Override
-    public void onConfigurationFailure(final ITestResult itr) {
-        endLogging(l -> {
-            l.f("[-] - Configuration method [{}] FAILED to execute...", itr.getName());
-            l.f(itr.getThrowable()
-                .getMessage());
+    public void onConfigurationFailure (final ITestResult itr) {
+        endLogging (l -> {
+            l.fatal ("[-] - Configuration method [{}] FAILED to execute...", itr.getName ());
+            l.fatal (itr.getThrowable ()
+                .getMessage ());
         }, CONFIG_LOG);
     }
 
@@ -68,9 +66,8 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      * org.testng.IConfigurationListener#onConfigurationSkip(org.testng.ITestResult)
      */
     @Override
-    public void onConfigurationSkip(final ITestResult itr) {
-        endLogging(
-            l -> l.w("[*] - Configuration method [{}] SKIPPED from execution...", itr.getName()),
+    public void onConfigurationSkip (final ITestResult itr) {
+        endLogging (l -> l.warn ("[*] - Configuration method [{}] SKIPPED from execution...", itr.getName ()),
             CONFIG_LOG);
     }
 
@@ -80,8 +77,7 @@ public class ConfigListener extends ListenerCommon implements IConfigurationList
      * ITestResult)
      */
     @Override
-    public void onConfigurationSuccess(final ITestResult itr) {
-        endLogging(l -> l.i("[+] - Configuration method [{}] PASSED...", itr.getName()),
-            CONFIG_LOG);
+    public void onConfigurationSuccess (final ITestResult itr) {
+        endLogging (l -> l.info ("[+] - Configuration method [{}] PASSED...", itr.getName ()), CONFIG_LOG);
     }
 }

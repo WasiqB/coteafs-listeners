@@ -15,9 +15,8 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import static com.github.wasiqb.coteafs.logger.Loggy.init;
-
-import com.github.wasiqb.coteafs.logger.Loggy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.IExecutionListener;
 
 /**
@@ -25,15 +24,15 @@ import org.testng.IExecutionListener;
  * @since 14-Sep-2019
  */
 public class ExecutionListener extends ListenerCommon implements IExecutionListener {
-    private static final boolean EXEC_LOG = ListenerCommon.LOG_CONFIG.isExecution();
-    private static final Loggy   LOG      = init();
+    private static final boolean EXEC_LOG = ListenerCommon.LOG_CONFIG.isExecution ();
+    private static final Logger  LOG      = LogManager.getLogger ();
 
     /**
      * @author Wasiq Bhamla
      * @since 14-Sep-2019
      */
-    public ExecutionListener() {
-        super(LOG);
+    public ExecutionListener () {
+        super (LOG);
     }
 
     /*
@@ -41,8 +40,8 @@ public class ExecutionListener extends ListenerCommon implements IExecutionListe
      * @see @see org.testng.IExecutionListener#onExecutionFinish()
      */
     @Override
-    public void onExecutionFinish() {
-        endLogging(l -> l.i("TestNG Execution finished..."), EXEC_LOG);
+    public void onExecutionFinish () {
+        endLogging (l -> l.info ("TestNG Execution finished..."), EXEC_LOG);
     }
 
     /*
@@ -50,7 +49,7 @@ public class ExecutionListener extends ListenerCommon implements IExecutionListe
      * @see @see org.testng.IExecutionListener#onExecutionStart()
      */
     @Override
-    public void onExecutionStart() {
-        startLogging(l -> l.i("TestNG Execution started..."), EXEC_LOG);
+    public void onExecutionStart () {
+        startLogging (l -> l.info ("TestNG Execution started..."), EXEC_LOG);
     }
 }

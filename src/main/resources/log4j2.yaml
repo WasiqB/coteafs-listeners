@@ -48,7 +48,7 @@ Configuration:
             interval: 1
             modulate: true
           SizeBasedTriggeringPolicy:
-            size: "50 MB"
+            size: 5MB
       - name: "error-log-appender"
         fileName: ${log-path}/${error-log}.log
         filePattern: ${log-path}/${error-log}-%d{yyyy-MM-dd}.log
@@ -61,7 +61,7 @@ Configuration:
             interval: 1
             modulate: true
           SizeBasedTriggeringPolicy:
-            size: "50 MB"
+            size: 5MB
     Async:
       name: async
       AppenderRef:

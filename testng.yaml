@@ -1,0 +1,13 @@
+name: Listener Suite
+listeners:
+  - com.github.wasiqb.coteafs.listeners.ConfigListener
+  - com.github.wasiqb.coteafs.listeners.SuiteListener
+  - com.github.wasiqb.coteafs.listeners.TestListener
+  - com.github.wasiqb.coteafs.listeners.ExecutionListener
+  - com.github.wasiqb.coteafs.listeners.DataProviderListener
+  - com.github.wasiqb.coteafs.listeners.AnnotationTransformer
+  - com.github.wasiqb.coteafs.listeners.SuiteResultReporter
+tests:
+  - name: Listener Test
+    classes:
+      - com.github.wasiqb.coteafs.listeners.ListenerTest

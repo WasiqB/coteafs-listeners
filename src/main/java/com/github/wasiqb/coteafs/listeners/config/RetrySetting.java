@@ -18,13 +18,14 @@ package com.github.wasiqb.coteafs.listeners.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.wasiqb.coteafs.config.util.BasePojo;
+import lombok.Data;
 
 /**
  * @author Wasiq Bhamla
  * @since 17-Sep-2019
  */
-public class RetrySetting extends BasePojo {
+@Data
+public class RetrySetting {
     private boolean      enable;
     private boolean      logging;
     private int          maxRetry;
@@ -34,82 +35,10 @@ public class RetrySetting extends BasePojo {
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
-    public RetrySetting() {
+    public RetrySetting () {
         this.enable = false;
         this.maxRetry = 2;
         this.logging = true;
-        this.onExceptions = new ArrayList<>();
-    }
-
-    /**
-     * @return the maxRetry
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public int getMaxRetry() {
-        return this.maxRetry;
-    }
-
-    /**
-     * @return the onClasses
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public List<String> getOnExceptions() {
-        return this.onExceptions;
-    }
-
-    /**
-     * @return the enable
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public boolean isEnable() {
-        return this.enable;
-    }
-
-    /**
-     * @return the logging
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public boolean isLogging() {
-        return this.logging;
-    }
-
-    /**
-     * @param enable the enable to set
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public void setEnable(final boolean enable) {
-        this.enable = enable;
-    }
-
-    /**
-     * @param logging the logging to set
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public void setLogging(final boolean logging) {
-        this.logging = logging;
-    }
-
-    /**
-     * @param maxRetry the maxRetry to set
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public void setMaxRetry(final int maxRetry) {
-        this.maxRetry = maxRetry;
-    }
-
-    /**
-     * @param onExceptions the onClasses to set
-     * @author Wasiq Bhamla
-     * @since 17-Sep-2019
-     */
-    public void setOnExceptions(final List<String> onExceptions) {
-        this.onExceptions = onExceptions;
+        this.onExceptions = new ArrayList<> ();
     }
 }

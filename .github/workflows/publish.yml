@@ -1,0 +1,19 @@
+name: Maven Package deployment to Maven Central
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release Type: major, minor, patch'
+        required: true
+        default: 'minor'
+
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/request-action@v2.0.0
+        with:
+          route: GET /repos/${{ github.repository }}/collaborators/${{ github.actor }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

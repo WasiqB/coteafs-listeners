@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: target
-          path: /target
+          path: ${{ github.workspace }}/target
 
       - name: Cache local Maven repository
         uses: actions/cache@v2

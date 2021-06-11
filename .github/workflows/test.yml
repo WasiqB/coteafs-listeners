@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ github.sha }}
 
   test:
     needs: [ build ]
@@ -51,7 +51,8 @@ jobs:
       - name: Restore local Maven repository
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ github.sha }}
 
       - name: Download target folder
         uses: actions/download-artifact@v2
@@ -83,7 +84,8 @@ jobs:
       - name: Restore local Maven repository
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ github.sha }}
 
       - name: Download target folder
         uses: actions/download-artifact@v2

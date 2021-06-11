@@ -20,5 +20,81 @@ jobs:
           java-version: '15'
           distribution: 'adopt'
 
+      - name: Build the project
+        run: mvn install -DskipTests
+
+      - name: Upload target folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: target
+          path: /target
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+  test:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Java and Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+
+      - name: Restore local Maven repository
+        uses: actions/cache@v2
+        with:
+          restore-keys: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Download target folder
+        uses: actions/download-artifact@v2
+        with:
+          name: target
+
       - name: Test execution
         run: mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test
+
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v2
+        with:
+          name: target
+          path: /target
+
+  analysis:
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Java and Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '15'
+          distribution: 'adopt'
+
+      - name: Restore local Maven repository
+        uses: actions/cache@v2
+        with:
+          restore-keys: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Download target folder
+        uses: actions/download-artifact@v2
+        with:
+          name: target
+
+      - name: Analyse code
+        run: |
+          mvn package sonar:sonar \
+            -Dsonar.host.url=$SONAR_HOST \
+            -Dsonar.organization=$SONAR_ORG \
+            -Dsonar.login=$SONAR_KEY \
+            -DskipTests \
+            -Dsonar.branch.name=${{ github.ref }}

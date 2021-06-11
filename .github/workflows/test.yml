@@ -51,7 +51,7 @@ jobs:
       - name: Restore local Maven repository
         uses: actions/cache@v2
         with:
-          restore-keys: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Download target folder
         uses: actions/download-artifact@v2
@@ -83,7 +83,7 @@ jobs:
       - name: Restore local Maven repository
         uses: actions/cache@v2
         with:
-          restore-keys: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Download target folder
         uses: actions/download-artifact@v2

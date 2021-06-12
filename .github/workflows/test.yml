@@ -93,9 +93,12 @@ jobs:
           name: target
 
       - name: Analyse code
+        env:
+          SONAR_KEY: ${{ secrets.SONAR_KEY }}
+          SONAR_ORG: ${{ secrets.SONAR_ORG }}
         run: |
           mvn package sonar:sonar \
-            -Dsonar.host.url=$SONAR_HOST \
+            -Dsonar.host.url="https://sonarcloud.io" \
             -Dsonar.organization=$SONAR_ORG \
             -Dsonar.login=$SONAR_KEY \
             -DskipTests \

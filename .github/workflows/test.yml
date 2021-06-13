@@ -66,7 +66,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: target
-          path: /target
+          path: ${{ github.workspace }}/target
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: ${{ github.workspace }}/target/surefire-reports/*.xml
 
   analysis:
     needs: [ test ]

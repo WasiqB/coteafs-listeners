@@ -15,8 +15,6 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.IDataProviderListener;
@@ -51,7 +49,7 @@ public class DataProviderListener extends ListenerCommon implements IDataProvide
         final ITestContext iTestContext) {
         endLogging (l -> {
             l.info ("Data provider [{}] execution completed...", method.getMethodName ());
-            final Map<String, String> params = method.findMethodParameters (iTestContext.getCurrentXmlTest ());
+            final var params = method.findMethodParameters (iTestContext.getCurrentXmlTest ());
             params.forEach ((k, v) -> l.info ("{}: {}", k, v));
         }, DP_LOG);
     }

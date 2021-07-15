@@ -18,14 +18,11 @@ package com.github.wasiqb.coteafs.listeners;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.IReporter;
 import org.testng.ISuite;
-import org.testng.ISuiteResult;
-import org.testng.ITestContext;
 import org.testng.xml.XmlSuite;
 
 /**
@@ -47,14 +44,14 @@ public class SuiteResultReporter implements IReporter {
     public void generateReport (final List<XmlSuite> xmlSuites, final List<ISuite> suites,
         final String outputDirectory) {
         if (SUITE_RESULT_LOG) {
-            for (final ISuite suite : suites) {
+            for (final var suite : suites) {
                 LOG.info (LINE);
                 LOG.info ("Suite [{}]: {}", suite.getName (), suite.getSuiteState ()
                                                                   .isFailed () ? "Failed" : "Passed");
                 LOG.info (SUB_LINE);
-                final Map<String, ISuiteResult> results = suite.getResults ();
-                for (final ISuiteResult result : results.values ()) {
-                    final ITestContext tc = result.getTestContext ();
+                final var results = suite.getResults ();
+                for (final var result : results.values ()) {
+                    final var tc = result.getTestContext ();
                     LOG.info ("Total Tests: {}", tc.getAllTestMethods ().length);
                     LOG.info ("Passed Tests: {}", tc.getPassedTests ()
                         .size ());

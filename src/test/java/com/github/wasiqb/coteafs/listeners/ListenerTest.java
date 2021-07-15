@@ -37,42 +37,44 @@ public class ListenerTest {
      * @since Sep 25, 2018
      */
     @BeforeTest
-    public void setupTest() {
+    public void setupTest () {
         countRetry = 0;
     }
 
     /**
      * @return data
+     *
      * @author Wasiq Bhamla
      * @since 15-Sep-2019
      */
     @DataProvider
-    public Iterator<Object[]> testData() {
-        final List<Object[]> data = new ArrayList<>();
-        data.add(new Object[] { true });
-        return data.iterator();
+    public Iterator<Object[]> testData () {
+        final List<Object[]> data = new ArrayList<> ();
+        data.add (new Object[] { true });
+        return data.iterator ();
     }
 
     /**
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException FileNotFoundException
      * @author Wasiq Bhamla
      * @since 17-Sep-2019
      */
     @Test
-    public void testRetry() throws FileNotFoundException {
+    public void testRetry () throws FileNotFoundException {
         countRetry++;
         if (countRetry < 2) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException ();
         }
     }
 
     /**
-     * @param value
+     * @param value Value
+     *
      * @author wasiqb
      * @since Sep 25, 2018
      */
-    @Test(dataProvider = "testData")
-    public void testSuccess(final boolean value) {
-        Assert.assertTrue(value);
+    @Test (dataProvider = "testData")
+    public void testSuccess (final boolean value) {
+        Assert.assertTrue (value);
     }
 }

@@ -45,7 +45,7 @@ class ListenerCommon {
     private       long   start;
 
     /**
-     * @param log
+     * @param log Logger
      *
      * @author wasiqb
      * @since Sep 25, 2018
@@ -54,10 +54,17 @@ class ListenerCommon {
         this.log = log;
     }
 
+    /**
+     * @param logger Logger
+     * @param canLog Can log?
+     *
+     * @author wasiqb
+     * @since Sep 25, 2018
+     */
     protected void endLogging (final Consumer<Logger> logger, final boolean canLog) {
         if (canLog) {
-            final long end = currentTimeMillis ();
-            final double total = (end - this.start) / 1000.0;
+            final var end = currentTimeMillis ();
+            final var total = (end - this.start) / 1000.0;
             logMessage (logger.andThen (l -> l.info (format ("Total Time taken: %.3f secs", total))));
         }
     }

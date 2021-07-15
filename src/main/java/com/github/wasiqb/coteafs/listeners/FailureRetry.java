@@ -15,9 +15,6 @@
  */
 package com.github.wasiqb.coteafs.listeners;
 
-import java.util.List;
-
-import com.github.wasiqb.coteafs.listeners.config.RetrySetting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.IRetryAnalyzer;
@@ -46,16 +43,16 @@ public class FailureRetry extends ListenerCommon implements IRetryAnalyzer {
     @SuppressWarnings ("unchecked")
     @Override
     public boolean retry (final ITestResult result) {
-        final RetrySetting setting = ListenerCommon.CONFIG.getRecover ();
+        final var setting = ListenerCommon.CONFIG.getRecover ();
         if (!result.isSuccess () && setting.isEnable ()) {
-            final boolean doLog = setting.isLogging ();
-            final int maxRetry = setting.getMaxRetry ();
-            final List<String> exceptions = setting.getOnExceptions ();
+            final var doLog = setting.isLogging ();
+            final var maxRetry = setting.getMaxRetry ();
+            final var exceptions = setting.getOnExceptions ();
             startLogging (l -> l.info ("Started to retry the failed test [{}]...", result.getName ()), doLog);
             while (this.retryCount++ < maxRetry) {
-                for (final String ex : exceptions) {
+                for (final var ex : exceptions) {
                     try {
-                        final Class<? extends Exception> cls = (Class<? extends Exception>) Class.forName (ex);
+                        final var cls = (Class<? extends Exception>) Class.forName (ex);
                         if (cls.isInstance (result.getThrowable ())) {
                             return true;
                         }

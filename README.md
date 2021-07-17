@@ -57,7 +57,7 @@ Add dependency to your POM file.
 <dependency>
     <groupId>com.github.wasiqb.coteafs</groupId>
     <artifactId>listeners</artifactId>
-    <version>2.4.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 

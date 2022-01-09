@@ -10,15 +10,16 @@
     <parent>
         <groupId>com.github.wasiqb.coteafs</groupId>
         <artifactId>parent</artifactId>
-        <version>3.8.0</version>
+        <version>3.9.0</version>
     </parent>
 
     <properties>
-        <coteafs.error.version>2.2.0</coteafs.error.version>
+        <sonar.projectKey>com.github.wasiqb.coteafs:listeners</sonar.projectKey>
+        <coteafs.error.version>2.3.0</coteafs.error.version>
         <lombok.version>1.18.22</lombok.version>
-        <log4j.version>2.17.0</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <jackson.version>2.13.1</jackson.version>
-        <datasource.version>1.4.0</datasource.version>
+        <datasource.version>1.5.0</datasource.version>
     </properties>
 
     <dependencies>
